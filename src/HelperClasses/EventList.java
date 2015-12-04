@@ -1,10 +1,6 @@
 package HelperClasses;
 
-/**
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
+import java.util.ArrayList;
 
 /**
  
@@ -12,5 +8,22 @@ and open the template in the editor.
  */
 public class EventList 
 {
-
+   ArrayList<Event> events;
+   int size;
+   
+   public EventList()
+   {  
+      events = new ArrayList<>();
+      size = 0;
+   }
+   
+   public boolean add( Event e )
+   {
+      return events.add(e);
+   }
+   
+   public boolean remove( Event e )
+   {  
+      return events.remove(e);
+   }
 }
