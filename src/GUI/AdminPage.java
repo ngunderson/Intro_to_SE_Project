@@ -1,4 +1,7 @@
 package GUI;
+import HelperClasses.Person;
+import HelperClasses.MusicNetwork;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,6 +22,8 @@ public class AdminPage extends javax.swing.JFrame
    public AdminPage()
    {
       initComponents();
+      jLabel1.setText( currentUser.getName() );
+      PersonJlist.setListData(lolvectorgoeshere);
    }
 
    /**
@@ -36,10 +41,15 @@ public class AdminPage extends javax.swing.JFrame
       jLabel1 = new javax.swing.JLabel();
       jPanel3 = new javax.swing.JPanel();
       jScrollPane1 = new javax.swing.JScrollPane();
-      EnsemblesJlist = new javax.swing.JList();
-      ClicktoEditButton = new javax.swing.JButton();
+      PersonJlist = new javax.swing.JList();
+      btnRemovePerson = new javax.swing.JButton();
       AccountTypeComboBox = new javax.swing.JComboBox();
       jLabel2 = new javax.swing.JLabel();
+      txtUsername = new javax.swing.JTextField();
+      txtPassword = new javax.swing.JTextField();
+      jLabel3 = new javax.swing.JLabel();
+      jLabel4 = new javax.swing.JLabel();
+      jButton1 = new javax.swing.JButton();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,21 +75,35 @@ public class AdminPage extends javax.swing.JFrame
 
       jPanel3.setBackground(new java.awt.Color(255, 153, 0));
 
-      EnsemblesJlist.setModel(new javax.swing.AbstractListModel()
-      {
-         String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-         public int getSize() { return strings.length; }
-         public Object getElementAt(int i) { return strings[i]; }
-      });
-      jScrollPane1.setViewportView(EnsemblesJlist);
+      jScrollPane1.setViewportView(PersonJlist);
 
-      ClicktoEditButton.setBackground(new java.awt.Color(153, 153, 255));
-      ClicktoEditButton.setText("Click to Edit");
+      btnRemovePerson.setBackground(new java.awt.Color(153, 153, 255));
+      btnRemovePerson.setText("Remove Person");
+      btnRemovePerson.addActionListener(new java.awt.event.ActionListener()
+      {
+         public void actionPerformed(java.awt.event.ActionEvent evt)
+         {
+            btnRemovePersonActionPerformed(evt);
+         }
+      });
 
       AccountTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Student", "Director" }));
 
       jLabel2.setFont(new java.awt.Font("Wide Latin", 0, 12)); // NOI18N
       jLabel2.setText("Select Account Type");
+
+      jLabel3.setText("Username:");
+
+      jLabel4.setText("Password:");
+
+      jButton1.setText("Add Person");
+      jButton1.addActionListener(new java.awt.event.ActionListener()
+      {
+         public void actionPerformed(java.awt.event.ActionEvent evt)
+         {
+            jButton1ActionPerformed(evt);
+         }
+      });
 
       javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
       jPanel3.setLayout(jPanel3Layout);
@@ -89,16 +113,29 @@ public class AdminPage extends javax.swing.JFrame
             .addGap(30, 30, 30)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addGroup(jPanel3Layout.createSequentialGroup()
-                  .addComponent(ClicktoEditButton, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                  .addGap(210, 210, 210))
+                  .addComponent(btnRemovePerson, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addGap(0, 0, Short.MAX_VALUE))
                .addGroup(jPanel3Layout.createSequentialGroup()
-                  .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-               .addGroup(jPanel3Layout.createSequentialGroup()
-                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                     .addComponent(jLabel2)
-                     .addComponent(AccountTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                  .addGap(0, 0, Short.MAX_VALUE))))
+                  .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                           .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                           .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                           .addComponent(AccountTypeComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                           .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING)
+                           .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)))
+                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                  .addContainerGap())))
+         .addGroup(jPanel3Layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jLabel2)
+            .addGap(0, 0, Short.MAX_VALUE))
       );
       jPanel3Layout.setVerticalGroup(
          jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,11 +143,22 @@ public class AdminPage extends javax.swing.JFrame
             .addGap(4, 4, 4)
             .addComponent(jLabel2)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(AccountTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addGroup(jPanel3Layout.createSequentialGroup()
+                  .addComponent(AccountTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                     .addComponent(jLabel3))
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                     .addComponent(jLabel4))
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addComponent(jButton1)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(ClicktoEditButton)
+            .addComponent(btnRemovePerson)
             .addContainerGap(28, Short.MAX_VALUE))
       );
 
@@ -148,6 +196,21 @@ public class AdminPage extends javax.swing.JFrame
 
       pack();
    }// </editor-fold>//GEN-END:initComponents
+
+   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+   {//GEN-HEADEREND:event_jButton1ActionPerformed
+      int type = AccountTypeComboBox.getSelectedIndex();
+      if ( !currentUser.createPerson( type, txtUsername.getText(), txtPassword.getText() ) )
+         JOptionPane.showMessageDialog( null, "User already created!");
+   }//GEN-LAST:event_jButton1ActionPerformed
+
+   private void btnRemovePersonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRemovePersonActionPerformed
+   {//GEN-HEADEREND:event_btnRemovePersonActionPerformed
+      Person p = (Person) PersonJlist.getSelectedValue();
+      lolvectorgoeshere.remove( p );
+      PersonJlist.setListData(lolvectorgoeshere);
+
+   }//GEN-LAST:event_btnRemovePersonActionPerformed
 
    /**
     @param args the command line arguments
@@ -200,13 +263,18 @@ public class AdminPage extends javax.swing.JFrame
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JComboBox AccountTypeComboBox;
-   private javax.swing.JButton ClicktoEditButton;
-   private javax.swing.JList EnsemblesJlist;
+   private javax.swing.JList PersonJlist;
+   private javax.swing.JButton btnRemovePerson;
+   private javax.swing.JButton jButton1;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
+   private javax.swing.JLabel jLabel3;
+   private javax.swing.JLabel jLabel4;
    private javax.swing.JPanel jPanel1;
    private javax.swing.JPanel jPanel2;
    private javax.swing.JPanel jPanel3;
    private javax.swing.JScrollPane jScrollPane1;
+   private javax.swing.JTextField txtPassword;
+   private javax.swing.JTextField txtUsername;
    // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,7 @@
 package GUI;
 
 
+import HelperClasses.Event;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -30,6 +31,9 @@ public class StudentPage extends javax.swing.JFrame
             }
          }
       });
+      jLabel1.setText( currentUser.getName() );
+      EnsembleJlist.setListData( currentUser.viewEnsembles() );
+      UpcomingEventsJlist.setListData( currentUser.viewEvents() );
    }
 
    /**
@@ -167,8 +171,11 @@ public class StudentPage extends javax.swing.JFrame
 
    private void DoubleClickEnsembleJlistActionPerformed( MouseEvent evt )
    {
-      int index = EnsembleJlist.locationToIndex(evt.getPoint());
-      
+      //int index = EnsembleJlist.locationToIndex(evt.getPoint());
+      Event e = (Event) EnsembleJlist.getSelectedValue();
+      EventPage p = new EventPage( e );
+      p.pack();//maybe
+      p.setVisible( true );
    }
    
    /**

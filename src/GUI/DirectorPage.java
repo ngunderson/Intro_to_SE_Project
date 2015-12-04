@@ -1,4 +1,8 @@
 package GUI;
+import HelperClasses.MusicNetwork;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import HelperClasses.Event;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,6 +23,16 @@ public class DirectorPage extends javax.swing.JFrame
    public DirectorPage()
    {
       initComponents();
+      EnsemblesJlist.addMouseListener(new MouseAdapter() {
+         public void mouseClicked( MouseEvent evt ){
+            if( evt.getClickCount() == 2 ){
+               DoubleClickEnsemblesJlistActionPerformed(evt);
+            }
+         }
+      });
+      jLabel1.setText( currentUser.getName() );
+      EnsemblesJlist.setListData( currentUser.viewEnsembles() );
+      UpcomingEventsJlist.setListData( currentUser.viewEvents() );
    }
 
    /**
@@ -42,6 +56,8 @@ public class DirectorPage extends javax.swing.JFrame
       jScrollPane2 = new javax.swing.JScrollPane();
       UpcomingEventsJlist = new javax.swing.JList();
       CreateEnsembleButton = new javax.swing.JButton();
+      txtEnsembleName = new javax.swing.JTextField();
+      jLabel4 = new javax.swing.JLabel();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +107,15 @@ public class DirectorPage extends javax.swing.JFrame
 
       CreateEnsembleButton.setBackground(new java.awt.Color(153, 153, 255));
       CreateEnsembleButton.setText("Create Ensemble");
+      CreateEnsembleButton.addActionListener(new java.awt.event.ActionListener()
+      {
+         public void actionPerformed(java.awt.event.ActionEvent evt)
+         {
+            CreateEnsembleButtonActionPerformed(evt);
+         }
+      });
+
+      jLabel4.setText("Ensemble name:");
 
       javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
       jPanel3.setLayout(jPanel3Layout);
@@ -102,12 +127,17 @@ public class DirectorPage extends javax.swing.JFrame
                .addComponent(CreateEnsembleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                .addGroup(jPanel3Layout.createSequentialGroup()
                   .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addGap(0, 4, Short.MAX_VALUE))
+                  .addGap(0, 0, Short.MAX_VALUE))
                .addComponent(jScrollPane1))
             .addGap(18, 18, 18)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-               .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-               .addComponent(jScrollPane2))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+               .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                  .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                  .addComponent(jScrollPane2))
+               .addGroup(jPanel3Layout.createSequentialGroup()
+                  .addComponent(jLabel4)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                  .addComponent(txtEnsembleName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap())
       );
       jPanel3Layout.setVerticalGroup(
@@ -122,7 +152,10 @@ public class DirectorPage extends javax.swing.JFrame
                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                .addComponent(jScrollPane2))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(CreateEnsembleButton)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+               .addComponent(CreateEnsembleButton)
+               .addComponent(txtEnsembleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jLabel4))
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       );
 
@@ -160,6 +193,22 @@ public class DirectorPage extends javax.swing.JFrame
 
       pack();
    }// </editor-fold>//GEN-END:initComponents
+
+   private void DoubleClickEnsemblesJlistActionPerformed( MouseEvent evt )
+   {
+      //int index = EnsemblesJlist.locationToIndex(evt.getPoint());
+      Event e = (Event) EnsemblesJlist.getSelectedValue();
+      EventPage p = new EventPage( e );
+      p.pack();//maybe
+      p.setVisible( true );
+   }
+   
+   private void CreateEnsembleButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CreateEnsembleButtonActionPerformed
+   {//GEN-HEADEREND:event_CreateEnsembleButtonActionPerformed
+      currentPerson.createEnsemble( txtEnsembleName.getText() );
+      EnsemblesJlist.setListData( currentUser.viewEnsembles() );
+      
+   }//GEN-LAST:event_CreateEnsembleButtonActionPerformed
 
    /**
     @param args the command line arguments
@@ -217,10 +266,12 @@ public class DirectorPage extends javax.swing.JFrame
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;
+   private javax.swing.JLabel jLabel4;
    private javax.swing.JPanel jPanel1;
    private javax.swing.JPanel jPanel2;
    private javax.swing.JPanel jPanel3;
    private javax.swing.JScrollPane jScrollPane1;
    private javax.swing.JScrollPane jScrollPane2;
+   private javax.swing.JTextField txtEnsembleName;
    // End of variables declaration//GEN-END:variables
 }

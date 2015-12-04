@@ -1,4 +1,5 @@
 package GUI;
+import HelperClasses.Event;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,13 +13,18 @@ package GUI;
  */
 public class EventPage extends javax.swing.JFrame
 {
-
+   static Event thisEvent;
    /**
     Creates new form EventPage
     */
-   public EventPage()
+   public EventPage( Event e )
    {
+      thisEvent = e;
       initComponents();
+      jLabel1.setText( thisEvent.getName() );
+      jLabel5.setText( thisEvent.getTime() );
+      //THE PEOPLE
+      MessagesJlist.setListData( thisEvent.messages );
    }
 
    /**
@@ -35,18 +41,17 @@ public class EventPage extends javax.swing.JFrame
       jPanel1 = new javax.swing.JPanel();
       jPanel2 = new javax.swing.JPanel();
       jLabel1 = new javax.swing.JLabel();
-      jButton1 = new javax.swing.JButton();
       jLabel4 = new javax.swing.JLabel();
       jLabel5 = new javax.swing.JLabel();
       jPanel3 = new javax.swing.JPanel();
       jScrollPane1 = new javax.swing.JScrollPane();
-      EnsembleJlist = new javax.swing.JList();
+      PeopleGoingJlist = new javax.swing.JList();
       jLabel3 = new javax.swing.JLabel();
       jScrollPane2 = new javax.swing.JScrollPane();
-      UpcomingEventsJlist = new javax.swing.JList();
-      jComboBox1 = new javax.swing.JComboBox();
+      MessagesJlist = new javax.swing.JList();
       PostButton = new javax.swing.JButton();
       MessageTextBox = new javax.swing.JTextField();
+      jLabel6 = new javax.swing.JLabel();
 
       jLabel2.setText("jLabel2");
 
@@ -59,9 +64,6 @@ public class EventPage extends javax.swing.JFrame
       jLabel1.setFont(new java.awt.Font("Wide Latin", 0, 30)); // NOI18N
       jLabel1.setText("Name");
 
-      jButton1.setBackground(new java.awt.Color(153, 153, 255));
-      jButton1.setText("Edit");
-
       jLabel4.setFont(new java.awt.Font("Wide Latin", 0, 14)); // NOI18N
       jLabel4.setText("Date: ");
 
@@ -73,15 +75,12 @@ public class EventPage extends javax.swing.JFrame
       jPanel2Layout.setHorizontalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-               .addGroup(jPanel2Layout.createSequentialGroup()
-                  .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                  .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                     .addComponent(jLabel4)
-                     .addComponent(jLabel5))))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+               .addComponent(jLabel4)
+               .addComponent(jLabel5))
+            .addContainerGap(48, Short.MAX_VALUE))
       );
       jPanel2Layout.setVerticalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,35 +92,28 @@ public class EventPage extends javax.swing.JFrame
                   .addComponent(jLabel4)
                   .addGap(18, 18, 18)
                   .addComponent(jLabel5)))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton1))
+            .addContainerGap(29, Short.MAX_VALUE))
       );
 
       jPanel3.setBackground(new java.awt.Color(255, 153, 0));
 
-      EnsembleJlist.setModel(new javax.swing.AbstractListModel()
-      {
-         String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-         public int getSize() { return strings.length; }
-         public Object getElementAt(int i) { return strings[i]; }
-      });
-      jScrollPane1.setViewportView(EnsembleJlist);
+      jScrollPane1.setViewportView(PeopleGoingJlist);
 
       jLabel3.setFont(new java.awt.Font("Wide Latin", 0, 12)); // NOI18N
       jLabel3.setText("Message Board");
 
-      UpcomingEventsJlist.setModel(new javax.swing.AbstractListModel()
+      MessagesJlist.setModel(new javax.swing.AbstractListModel()
       {
          String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
          public int getSize() { return strings.length; }
          public Object getElementAt(int i) { return strings[i]; }
       });
-      jScrollPane2.setViewportView(UpcomingEventsJlist);
-
-      jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Going", "Not Going", "No Response" }));
+      jScrollPane2.setViewportView(MessagesJlist);
 
       PostButton.setBackground(new java.awt.Color(153, 153, 255));
       PostButton.setText("Post");
+
+      jLabel6.setText("People going to event:");
 
       javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
       jPanel3.setLayout(jPanel3Layout);
@@ -130,8 +122,8 @@ public class EventPage extends javax.swing.JFrame
          .addGroup(jPanel3Layout.createSequentialGroup()
             .addGap(30, 30, 30)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-               .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+               .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jLabel6))
             .addGap(18, 18, 18)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addGroup(jPanel3Layout.createSequentialGroup()
@@ -150,10 +142,10 @@ public class EventPage extends javax.swing.JFrame
       jPanel3Layout.setVerticalGroup(
          jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel3Layout.createSequentialGroup()
-            .addGap(14, 14, 14)
+            .addGap(17, 17, 17)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-               .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-               .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+               .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jLabel6))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addComponent(jScrollPane1)
@@ -249,23 +241,22 @@ public class EventPage extends javax.swing.JFrame
       {
          public void run()
          {
-            new EventPage().setVisible(true);
+            new EventPage( thisEvent ).setVisible(true);
          }
       });
    }
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
-   private javax.swing.JList EnsembleJlist;
    private javax.swing.JTextField MessageTextBox;
+   private javax.swing.JList MessagesJlist;
+   private javax.swing.JList PeopleGoingJlist;
    private javax.swing.JButton PostButton;
-   private javax.swing.JList UpcomingEventsJlist;
-   private javax.swing.JButton jButton1;
-   private javax.swing.JComboBox jComboBox1;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;
    private javax.swing.JLabel jLabel4;
    private javax.swing.JLabel jLabel5;
+   private javax.swing.JLabel jLabel6;
    private javax.swing.JPanel jPanel1;
    private javax.swing.JPanel jPanel2;
    private javax.swing.JPanel jPanel3;
