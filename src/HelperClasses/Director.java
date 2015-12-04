@@ -10,7 +10,15 @@ and open the template in the editor.
  
  @author gundersonn
  */
-public class Director 
+public class Director extends Person
 {
-
+   Director( String p, String u )
+   {
+      super( p, u );
+   }
+   
+   public void createEnsemble( String name )
+   {
+      
+   }
 }

@@ -10,7 +10,10 @@ and open the template in the editor.
  
  @author gundersonn
  */
-public class Student 
+public class Student extends Person
 {
-
+   Student( String p, String u )
+   {
+      super( p, u );
+   }
 }

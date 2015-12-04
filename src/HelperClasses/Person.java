@@ -12,5 +12,37 @@ and open the template in the editor.
  */
 public class Person 
 {
-
+   protected String password;
+   protected String username;
+   
+   Person( String p, String u )
+   {
+      password = p;
+      username = u;
+   }
+   
+   public void joinEnsemble( Ensemble en )
+   {
+      
+   }
+   
+   public void joinEvent( Event ev )
+   {
+      
+   }
+   
+   public boolean login( String u, String p )
+   {
+      return u == username && p == password;
+   }
+   
+   public void viewEnsembles( )
+   {
+      
+   }
+   
+   public void viewEvents()
+   {
+      
+   }
 }
