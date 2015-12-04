@@ -1,5 +1,7 @@
 package HelperClasses;
 
+import java.util.Vector;
+
 /**
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -15,7 +17,7 @@ public class Person
    protected String password;
    protected String username;
    
-   Person( String u, String p )
+   public Person( String u, String p )
    {
       username = u;
       password = p;
@@ -36,14 +38,14 @@ public class Person
       return u == username && p == password;
    }
    
-   public void viewEnsembles( )
+   public Vector<Ensemble> viewEnsembles( MusicNetwork network )
    {
-      
+      return network.ensemblesFor( this );
    }
    
-   public void viewEvents()
+   public Vector<Event> viewEvents( MusicNetwork network )
    {
-      
+      return network.eventsFor(this);
    }
    
    public String getName()

@@ -14,6 +14,7 @@ public class Event
    private Date time;
    public Vector<String> messages;
 
+
    
    
    public Event( String location, String name, Date time )
@@ -38,7 +39,11 @@ public class Event
    {
       return time.toString();
    }
-   
+   @Override
+   public String toString()
+   {
+      return name + "Location: " + location;
+   }
    
    
 }

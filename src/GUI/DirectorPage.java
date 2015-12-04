@@ -1,8 +1,7 @@
 package GUI;
-import HelperClasses.MusicNetwork;
+import HelperClasses.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import HelperClasses.Event;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,13 +15,16 @@ import HelperClasses.Event;
  */
 public class DirectorPage extends javax.swing.JFrame
 {
-
+   private static MusicNetwork network;
+   private Director currentUser;
    /**
     Creates new form DirectorPage
     */
-   public DirectorPage()
+   public DirectorPage(MusicNetwork _network)
    {
       initComponents();
+      network = _network;
+      currentUser = (Director) network.getCurrentUser();
       EnsemblesJlist.addMouseListener(new MouseAdapter() {
          public void mouseClicked( MouseEvent evt ){
             if( evt.getClickCount() == 2 ){
@@ -30,9 +32,17 @@ public class DirectorPage extends javax.swing.JFrame
             }
          }
       });
+      UpcomingEventsJlist.addMouseListener(new MouseAdapter() {
+         public void mouseClicked( MouseEvent evt ){
+            if( evt.getClickCount() == 2 ){
+               DoubleClickEventJlistActionPerformed(evt);
+            }
+         }
+      });
+      
       jLabel1.setText( currentUser.getName() );
-      EnsemblesJlist.setListData( currentUser.viewEnsembles() );
-      UpcomingEventsJlist.setListData( currentUser.viewEvents() );
+      EnsemblesJlist.setListData( currentUser.viewEnsembles(network) );
+      UpcomingEventsJlist.setListData( currentUser.viewEvents(network) );
    }
 
    /**
@@ -194,19 +204,26 @@ public class DirectorPage extends javax.swing.JFrame
       pack();
    }// </editor-fold>//GEN-END:initComponents
 
-   private void DoubleClickEnsemblesJlistActionPerformed( MouseEvent evt )
+   private void DoubleClickEventJlistActionPerformed( MouseEvent evt )
    {
       //int index = EnsemblesJlist.locationToIndex(evt.getPoint());
-      Event e = (Event) EnsemblesJlist.getSelectedValue();
-      EventPage p = new EventPage( e );
+      Event e = (Event) UpcomingEventsJlist.getSelectedValue();
+      EventPage p = new EventPage( e , network);
       p.pack();//maybe
       p.setVisible( true );
    }
    
+   private void DoubleClickEnsemblesJlistActionPerformed( MouseEvent evt)
+   {
+      Ensemble e = (Ensemble)EnsemblesJlist.getSelectedValue();
+      EnsemblePage p = new EnsemblePage( e, network );
+      p.setVisible(true);
+   }
+   
    private void CreateEnsembleButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CreateEnsembleButtonActionPerformed
    {//GEN-HEADEREND:event_CreateEnsembleButtonActionPerformed
-      currentPerson.createEnsemble( txtEnsembleName.getText() );
-      EnsemblesJlist.setListData( currentUser.viewEnsembles() );
+      currentUser.createEnsemble( txtEnsembleName.getText(), network );
+      EnsemblesJlist.setListData( currentUser.viewEnsembles(network) );
       
    }//GEN-LAST:event_CreateEnsembleButtonActionPerformed
 
@@ -254,7 +271,7 @@ public class DirectorPage extends javax.swing.JFrame
       {
          public void run()
          {
-            new DirectorPage().setVisible(true);
+            new DirectorPage(network).setVisible(true);
          }
       });
    }

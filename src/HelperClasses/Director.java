@@ -17,8 +17,8 @@ public class Director extends Person
       super( u, p );
    }
    
-   public void createEnsemble( String name )
+   public void createEnsemble( String name, MusicNetwork network )
    {
-      
+      network.addEnsemble(name);
    }
 }

@@ -17,28 +17,30 @@ public class Administrator extends Person
       super( u, p );
    }
    
-   public boolean createPerson( int type, String name, String password )
+   public boolean createPerson( int type, String name, String password, MusicNetwork network )
    {
       if ( type == 0 )//Student
       {
-        
-      
+         Person p = new Student(name, password);
+         return network.addPerson(p);
       }
       else if ( type == 1 )//Director
       {
-         
+         Person p = new Director(name, password);
+         return network.addPerson(p);
       }
       
       else if ( type == 2 )//Admin
       {
-         
+         Person p = new Administrator(name, password);
+         return network.addPerson(p);
       }
       return false;
    }
    
-   public boolean removePerson( String name )
+   public boolean removePerson( Person p, MusicNetwork network )
    {
-      return false;
+      return network.removePerson(p);
    }
    
 }

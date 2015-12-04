@@ -1,4 +1,7 @@
 package GUI;
+import HelperClasses.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,13 +15,23 @@ package GUI;
  */
 public class EnsemblePage extends javax.swing.JFrame
 {
-
+   private static Ensemble thisEnsemble;
+   private static MusicNetwork network;
    /**
     Creates new form EnsemblePage
     */
-   public EnsemblePage()
+   public EnsemblePage( Ensemble e, MusicNetwork _network )
    {
       initComponents();
+      thisEnsemble = e;
+      network = _network;
+      UpcomingEventsJlist.addMouseListener(new MouseAdapter() {
+         public void mouseClicked( MouseEvent evt ){
+            if( evt.getClickCount() == 2 ){
+               DoubleClickEventJlistActionPerformed(evt);
+            }
+         }
+      });
    }
 
    /**
@@ -47,7 +60,7 @@ public class EnsemblePage extends javax.swing.JFrame
       AddEventButton = new javax.swing.JButton();
       jLabel4 = new javax.swing.JLabel();
       jScrollPane3 = new javax.swing.JScrollPane();
-      jList1 = new javax.swing.JList();
+      MessageJList = new javax.swing.JList();
       MessageTextBox = new javax.swing.JTextField();
       PostButton = new javax.swing.JButton();
 
@@ -123,16 +136,23 @@ public class EnsemblePage extends javax.swing.JFrame
       jLabel4.setFont(new java.awt.Font("Wide Latin", 0, 12)); // NOI18N
       jLabel4.setText("Files");
 
-      jList1.setModel(new javax.swing.AbstractListModel()
+      MessageJList.setModel(new javax.swing.AbstractListModel()
       {
          String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
          public int getSize() { return strings.length; }
          public Object getElementAt(int i) { return strings[i]; }
       });
-      jScrollPane3.setViewportView(jList1);
+      jScrollPane3.setViewportView(MessageJList);
 
       PostButton.setBackground(new java.awt.Color(153, 153, 255));
       PostButton.setText("Post");
+      PostButton.addActionListener(new java.awt.event.ActionListener()
+      {
+         public void actionPerformed(java.awt.event.ActionEvent evt)
+         {
+            PostButtonActionPerformed(evt);
+         }
+      });
 
       javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
       jPanel3.setLayout(jPanel3Layout);
@@ -227,6 +247,20 @@ public class EnsemblePage extends javax.swing.JFrame
       pack();
    }// </editor-fold>//GEN-END:initComponents
 
+   private void PostButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_PostButtonActionPerformed
+   {//GEN-HEADEREND:event_PostButtonActionPerformed
+      thisEnsemble.messages.add( MessageTextBox.getText() );
+      MessageJList.setListData( thisEnsemble.messages );
+   }//GEN-LAST:event_PostButtonActionPerformed
+
+   
+   private void DoubleClickEventJlistActionPerformed( MouseEvent evt)
+   {
+      Event e = (Event)UpcomingEventsJlist.getSelectedValue();
+      EventPage p = new EventPage( e, network );
+      p.setVisible(true);
+   }
+   
    /**
     @param args the command line arguments
     */
@@ -271,7 +305,7 @@ public class EnsemblePage extends javax.swing.JFrame
       {
          public void run()
          {
-            new EnsemblePage().setVisible(true);
+            new EnsemblePage(thisEnsemble,network).setVisible(true);
          }
       });
    }
@@ -281,6 +315,7 @@ public class EnsemblePage extends javax.swing.JFrame
    private javax.swing.JButton AddStudentButton;
    private javax.swing.JLabel DirectorLabel;
    private javax.swing.JList EnsemblesJlist;
+   private javax.swing.JList MessageJList;
    private javax.swing.JTextField MessageTextBox;
    private javax.swing.JButton PostButton;
    private javax.swing.JList UpcomingEventsJlist;
@@ -289,7 +324,6 @@ public class EnsemblePage extends javax.swing.JFrame
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;
    private javax.swing.JLabel jLabel4;
-   private javax.swing.JList jList1;
    private javax.swing.JPanel jPanel1;
    private javax.swing.JPanel jPanel2;
    private javax.swing.JPanel jPanel3;

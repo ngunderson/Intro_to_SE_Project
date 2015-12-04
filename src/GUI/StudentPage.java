@@ -4,6 +4,7 @@ package GUI;
 import HelperClasses.Event;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import HelperClasses.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,13 +18,24 @@ import java.awt.event.MouseEvent;
  */
 public class StudentPage extends javax.swing.JFrame
 {
-
+   private static MusicNetwork network;
+   private Person currentUser;
+   
    /**
     Creates new form StudentPage
     */
-   public StudentPage()
+   public StudentPage(MusicNetwork _network)
    {
       initComponents();
+      network = _network;
+      currentUser = network.getCurrentUser();
+      UpcomingEventsJlist.addMouseListener(new MouseAdapter() {
+         public void mouseClicked( MouseEvent evt ){
+            if( evt.getClickCount() == 2 ){
+               DoubleClickEventJlistActionPerformed(evt);
+            }
+         }
+      });
       EnsembleJlist.addMouseListener(new MouseAdapter() {
          public void mouseClicked( MouseEvent evt ){
             if( evt.getClickCount() == 2 ){
@@ -32,8 +44,8 @@ public class StudentPage extends javax.swing.JFrame
          }
       });
       jLabel1.setText( currentUser.getName() );
-      EnsembleJlist.setListData( currentUser.viewEnsembles() );
-      UpcomingEventsJlist.setListData( currentUser.viewEvents() );
+      EnsembleJlist.setListData( currentUser.viewEnsembles(network) );
+      UpcomingEventsJlist.setListData( currentUser.viewEvents(network) );
    }
 
    /**
@@ -169,13 +181,20 @@ public class StudentPage extends javax.swing.JFrame
       pack();
    }// </editor-fold>//GEN-END:initComponents
 
-   private void DoubleClickEnsembleJlistActionPerformed( MouseEvent evt )
+   private void DoubleClickEventJlistActionPerformed( MouseEvent evt )
    {
       //int index = EnsembleJlist.locationToIndex(evt.getPoint());
-      Event e = (Event) EnsembleJlist.getSelectedValue();
-      EventPage p = new EventPage( e );
+      Event e = (Event) UpcomingEventsJlist.getSelectedValue();
+      EventPage p = new EventPage( e , network );
       p.pack();//maybe
       p.setVisible( true );
+   }
+   
+   private void DoubleClickEnsembleJlistActionPerformed( MouseEvent evt)
+   {
+      Ensemble e = (Ensemble)EnsembleJlist.getSelectedValue();
+      EnsemblePage p = new EnsemblePage( e, network );
+      p.setVisible(true);
    }
    
    /**
@@ -222,7 +241,7 @@ public class StudentPage extends javax.swing.JFrame
       {
          public void run()
          {
-            new StudentPage().setVisible(true);
+            new StudentPage(network).setVisible(true);
          }
       });
    }

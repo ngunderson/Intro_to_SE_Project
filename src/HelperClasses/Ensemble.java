@@ -10,12 +10,14 @@ public class Ensemble
 {
    private Director director;
    private Vector<Person> members;
-   private Vector<String> messages;
+   public Vector<String> messages;
    private Vector<Event> events;
    private String name;
    
    public Ensemble( Director d, Vector<Event> e, String n )
    {
+      members = new Vector<>();
+      messages = new Vector<>();
       director = d;
       events = e;
       name = n;
@@ -46,4 +48,9 @@ public class Ensemble
       return members.add(p);
    }
    
+   @Override
+   public String toString()
+   {
+      return name + ", Director: " + director.getName();
+   }
 }

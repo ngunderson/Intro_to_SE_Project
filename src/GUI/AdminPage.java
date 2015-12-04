@@ -1,6 +1,5 @@
 package GUI;
-import HelperClasses.Person;
-import HelperClasses.MusicNetwork;
+import HelperClasses.*;
 import javax.swing.JOptionPane;
 
 /*
@@ -15,15 +14,18 @@ import javax.swing.JOptionPane;
  */
 public class AdminPage extends javax.swing.JFrame
 {
-
+   private Administrator currentUser;
+   private static MusicNetwork network;
    /**
     Creates new form AdminPage
     */
-   public AdminPage()
+   public AdminPage( MusicNetwork _network )
    {
       initComponents();
+      currentUser = (Administrator) network.getCurrentUser();
       jLabel1.setText( currentUser.getName() );
-      PersonJlist.setListData(lolvectorgoeshere);
+      PersonJlist.setListData(network.getPeople());
+      network = _network;
    }
 
    /**
@@ -200,15 +202,17 @@ public class AdminPage extends javax.swing.JFrame
    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
    {//GEN-HEADEREND:event_jButton1ActionPerformed
       int type = AccountTypeComboBox.getSelectedIndex();
-      if ( !currentUser.createPerson( type, txtUsername.getText(), txtPassword.getText() ) )
+      if ( !currentUser.createPerson( type, txtUsername.getText(), txtPassword.getText(), network ) )
          JOptionPane.showMessageDialog( null, "User already created!");
+      else
+         PersonJlist.setListData(network.getPeople());
    }//GEN-LAST:event_jButton1ActionPerformed
 
    private void btnRemovePersonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRemovePersonActionPerformed
    {//GEN-HEADEREND:event_btnRemovePersonActionPerformed
       Person p = (Person) PersonJlist.getSelectedValue();
-      lolvectorgoeshere.remove( p );
-      PersonJlist.setListData(lolvectorgoeshere);
+      currentUser.removePerson( p, network );
+      PersonJlist.setListData(network.getPeople());
 
    }//GEN-LAST:event_btnRemovePersonActionPerformed
 
@@ -256,7 +260,7 @@ public class AdminPage extends javax.swing.JFrame
       {
          public void run()
          {
-            new AdminPage().setVisible(true);
+            new AdminPage(network).setVisible(true);
          }
       });
    }

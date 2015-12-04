@@ -15,6 +15,8 @@ public class MusicNetwork
    
    public MusicNetwork()
    {  
+      people = new Vector<>();
+      ensembles = new Vector<>();
       currentUser = null;
       Person stu1 = new Student( "Nathan", "Gunderson" );
       people.add(stu1);
@@ -123,6 +125,11 @@ public class MusicNetwork
       return returnEvents;
    }
    
+   public Vector<Person> getPeople()
+   {
+      return people;
+   }
+   
    // Check here if login problems
    public Person login( String username, String password )
    {  
@@ -139,6 +146,21 @@ public class MusicNetwork
       return temp;
    }
    
+   public boolean addPerson( Person p )
+   {
+      return people.add(p);
+   }
    
+   public boolean removePerson( Person p )
+   {
+      return people.remove(p);
+   }
+   
+   public boolean addEnsemble( String name )
+   {
+      Vector<Event> eventList = new Vector<>();
+      Ensemble en = new Ensemble( (Director) currentUser, eventList , name );
+      return ensembles.add(en);
+   }
    
 }

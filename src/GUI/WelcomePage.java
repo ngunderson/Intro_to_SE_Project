@@ -1,5 +1,5 @@
 package GUI;
-import HelperClasses.MusicNetwork;
+import HelperClasses.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,6 +18,7 @@ public class WelcomePage extends javax.swing.JFrame
     */
    public WelcomePage()
    {
+      network = new MusicNetwork();
       initComponents();
       
    }
@@ -41,8 +42,8 @@ public class WelcomePage extends javax.swing.JFrame
       jLabel3 = new javax.swing.JLabel();
       PasswordTextBox = new javax.swing.JTextField();
       LoginButton = new javax.swing.JButton();
-      CreateNewAccountButton = new javax.swing.JButton();
       ErrorMessageLabel = new javax.swing.JLabel();
+      LoginErrorLabel = new javax.swing.JLabel();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setBackground(new java.awt.Color(255, 153, 51));
@@ -76,12 +77,10 @@ public class WelcomePage extends javax.swing.JFrame
          }
       });
 
-      CreateNewAccountButton.setBackground(new java.awt.Color(153, 153, 255));
-      CreateNewAccountButton.setFont(new java.awt.Font("Wide Latin", 0, 11)); // NOI18N
-      CreateNewAccountButton.setText("Create New Account");
-
       ErrorMessageLabel.setFont(new java.awt.Font("Wide Latin", 0, 11)); // NOI18N
       ErrorMessageLabel.setToolTipText("");
+
+      LoginErrorLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
       javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
       jPanel1.setLayout(jPanel1Layout);
@@ -99,9 +98,11 @@ public class WelcomePage extends javax.swing.JFrame
                .addGroup(jPanel1Layout.createSequentialGroup()
                   .addGap(110, 110, 110)
                   .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                     .addComponent(CreateNewAccountButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                     .addComponent(LoginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                     .addComponent(ErrorMessageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                     .addComponent(LoginButton, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                     .addComponent(ErrorMessageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+               .addGroup(jPanel1Layout.createSequentialGroup()
+                  .addGap(130, 130, 130)
+                  .addComponent(LoginErrorLabel)))
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       );
       jPanel1Layout.setVerticalGroup(
@@ -117,9 +118,9 @@ public class WelcomePage extends javax.swing.JFrame
             .addComponent(PasswordTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(LoginButton)
-            .addGap(16, 16, 16)
-            .addComponent(CreateNewAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(LoginErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(ErrorMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
       );
@@ -175,9 +176,34 @@ public class WelcomePage extends javax.swing.JFrame
    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_LoginButtonActionPerformed
    {//GEN-HEADEREND:event_LoginButtonActionPerformed
       // jPanel2.setVisible(false);
+      String name = UsernameTextBox.getText();
+      String password = PasswordTextBox.getText();
+      Person p = network.login(name, password);
+      if( p != null && !name.equals("") && !password.equals(""))
+      {
+         LoginErrorLabel.setText("");
+         if( p instanceof Student )
+         {
+            network.setCurrentUser(p);
+            StudentPage page = new StudentPage(network);
+            page.setVisible(true);
+         }
+         else if( p instanceof Director )
+         {  
+            network.setCurrentUser(p);
+            DirectorPage page = new DirectorPage(network);
+            page.setVisible(true);
+         }
+         else
+         {
+            network.setCurrentUser(p);
+            AdminPage page = new AdminPage(network);
+            page.setVisible(true);
+         }
+      }
+      else
+         LoginErrorLabel.setText("Invalid Username or Password!");
       
-      StudentPage page = new StudentPage();
-      page.setVisible(true);
    }//GEN-LAST:event_LoginButtonActionPerformed
 
    /**
@@ -230,9 +256,9 @@ public class WelcomePage extends javax.swing.JFrame
    }
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
-   private javax.swing.JButton CreateNewAccountButton;
    private javax.swing.JLabel ErrorMessageLabel;
    private javax.swing.JButton LoginButton;
+   private javax.swing.JLabel LoginErrorLabel;
    private javax.swing.JTextField PasswordTextBox;
    private javax.swing.JTextField UsernameTextBox;
    private javax.swing.JLabel jLabel1;
