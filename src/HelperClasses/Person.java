@@ -45,4 +45,21 @@ public class Person
    {
       
    }
+   
+   public String getName()
+   {
+      return username;
+   }
+   
+   @Override
+   public boolean equals( Object x )
+   {
+      if ( x instanceof Person )
+      {
+         Person p = (Person)x;
+         if ( p.username.equals(username) && p.password.equals(password) )
+            return true;
+      }
+      return false;
+   }
 }
