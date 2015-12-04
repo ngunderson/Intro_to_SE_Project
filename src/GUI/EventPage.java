@@ -207,6 +207,7 @@ public class EventPage extends javax.swing.JFrame
    private void PostButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_PostButtonActionPerformed
    {//GEN-HEADEREND:event_PostButtonActionPerformed
       thisEvent.messages.add( MessageTextBox.getText() );
+      MessagesJlist.setListData( thisEvent.messages );
    }//GEN-LAST:event_PostButtonActionPerformed
 
    /**

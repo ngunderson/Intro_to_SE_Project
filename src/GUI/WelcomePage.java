@@ -1,5 +1,5 @@
 package GUI;
-
+import HelperClasses.MusicNetwork;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,7 +12,7 @@ package GUI;
  */
 public class WelcomePage extends javax.swing.JFrame
 {
-
+   static MusicNetwork network;
    /**
     Creates new form GUI
     */
@@ -175,6 +175,7 @@ public class WelcomePage extends javax.swing.JFrame
    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_LoginButtonActionPerformed
    {//GEN-HEADEREND:event_LoginButtonActionPerformed
       // jPanel2.setVisible(false);
+      
       StudentPage page = new StudentPage();
       page.setVisible(true);
    }//GEN-LAST:event_LoginButtonActionPerformed
