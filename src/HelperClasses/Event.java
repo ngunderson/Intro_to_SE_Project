@@ -13,6 +13,10 @@ public class Event
    private String name;
    private Date time;
    public ArrayList<String> messages;
+   public ArrayList<Person> going;
+   public ArrayList<Person> maybe;
+   public ArrayList<Person> notGoing;
+   
    
    public Event( String location, String name, Date time )
    {  
