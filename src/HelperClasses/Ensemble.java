@@ -1,6 +1,6 @@
 package HelperClasses;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  
@@ -9,12 +9,12 @@ import java.util.ArrayList;
 public class Ensemble 
 {
    private Director director;
-   private EventList events;
-   private ArrayList<Person> members;
-   private ArrayList<String> messages;
+   private Vector<Person> members;
+   private Vector<String> messages;
+   private Vector<Event> events;
    private String name;
    
-   public Ensemble( Director d, EventList e, String n )
+   public Ensemble( Director d, Vector<Event> e, String n )
    {
       director = d;
       events = e;
@@ -24,6 +24,26 @@ public class Ensemble
    public boolean createEvent( Event e )
    {  
       return events.add(e);
+   }
+   
+   public Vector<Event> getEvents()
+   {
+      return events;
+   }
+   
+   public boolean contains( Person p )
+   {
+      for( Person pList : members )
+      {
+         if( pList.equals(p))
+            return true;
+      }
+      return false;
+   }
+   
+   public boolean addMember( Person p )
+   {
+      return members.add(p);
    }
    
 }

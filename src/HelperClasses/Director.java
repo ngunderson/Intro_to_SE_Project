@@ -12,9 +12,9 @@ and open the template in the editor.
  */
 public class Director extends Person
 {
-   Director( String p, String u )
+   Director( String u, String p )
    {
-      super( p, u );
+      super( u, p );
    }
    
    public void createEnsemble( String name )

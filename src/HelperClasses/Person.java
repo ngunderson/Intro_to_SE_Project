@@ -15,10 +15,10 @@ public class Person
    protected String password;
    protected String username;
    
-   Person( String p, String u )
+   Person( String u, String p )
    {
-      password = p;
       username = u;
+      password = p;
    }
    
    public void joinEnsemble( Ensemble en )

@@ -12,8 +12,8 @@ and open the template in the editor.
  */
 public class Student extends Person
 {
-   Student( String p, String u )
+   Student( String u, String p )
    {
-      super( p, u );
+      super( u, p );
    }
 }

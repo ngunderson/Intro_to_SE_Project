@@ -1,6 +1,6 @@
 package HelperClasses;
 
-import java.util.ArrayList;
+import java.util.Vector;
 import java.util.Date;
 
 /**
@@ -12,10 +12,10 @@ public class Event
    private String location;
    private String name;
    private Date time;
-   public ArrayList<String> messages;
-   public ArrayList<Person> going;
-   public ArrayList<Person> maybe;
-   public ArrayList<Person> notGoing;
+   public Vector<String> messages;
+   public Vector<Person> going;
+   public Vector<Person> maybe;
+   public Vector<Person> notGoing;
    
    
    public Event( String location, String name, Date time )
@@ -23,7 +23,7 @@ public class Event
       this.location = location;
       this.name = name;
       this.time = time;
-      this.messages = new ArrayList<>();
+      this.messages = new Vector<>();
    }
    
    public String getLocation()

@@ -12,9 +12,9 @@ and open the template in the editor.
  */
 public class Administrator extends Person
 {
-   Administrator( String p, String u )
+   Administrator( String u, String p )
    {
-      super( p, u );
+      super( u, p );
    }
    
    public boolean createPerson( int type, String name, String password )
@@ -38,7 +38,7 @@ public class Administrator extends Person
    
    public boolean removePerson( String name )
    {
-      
+      return false;
    }
    
 }
