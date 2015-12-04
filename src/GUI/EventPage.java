@@ -112,6 +112,13 @@ public class EventPage extends javax.swing.JFrame
 
       PostButton.setBackground(new java.awt.Color(153, 153, 255));
       PostButton.setText("Post");
+      PostButton.addActionListener(new java.awt.event.ActionListener()
+      {
+         public void actionPerformed(java.awt.event.ActionEvent evt)
+         {
+            PostButtonActionPerformed(evt);
+         }
+      });
 
       jLabel6.setText("People going to event:");
 
@@ -196,6 +203,11 @@ public class EventPage extends javax.swing.JFrame
 
       pack();
    }// </editor-fold>//GEN-END:initComponents
+
+   private void PostButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_PostButtonActionPerformed
+   {//GEN-HEADEREND:event_PostButtonActionPerformed
+      thisEvent.messages.add( MessageTextBox.getText() );
+   }//GEN-LAST:event_PostButtonActionPerformed
 
    /**
     @param args the command line arguments

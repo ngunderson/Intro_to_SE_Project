@@ -13,9 +13,7 @@ public class Event
    private String name;
    private Date time;
    public Vector<String> messages;
-   public Vector<Person> going;
-   public Vector<Person> maybe;
-   public Vector<Person> notGoing;
+
    
    
    public Event( String location, String name, Date time )
