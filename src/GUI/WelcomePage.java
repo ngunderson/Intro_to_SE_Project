@@ -49,6 +49,7 @@ public class WelcomePage extends javax.swing.JFrame
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setBackground(new java.awt.Color(255, 153, 51));
       setFocusTraversalPolicyProvider(true);
+      setMinimumSize(new java.awt.Dimension(479, 395));
 
       jPanel2.setBackground(new java.awt.Color(255, 204, 102));
 

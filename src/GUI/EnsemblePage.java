@@ -2,6 +2,7 @@ package GUI;
 import HelperClasses.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
@@ -32,6 +33,8 @@ public class EnsemblePage extends javax.swing.JFrame
       DirectorLabel.setText(thisEnsemble.getDirector().getName());
       UpcomingEventsJlist.setListData(thisEnsemble.getEvents());
       MessageJList.setListData(thisEnsemble.messages);
+      getRootPane().setDefaultButton(PostButton);
+      setLocationRelativeTo(null);
       if ( network.getCurrentUser() instanceof Director )
       {
          AddEventButton.setVisible(true);
@@ -80,6 +83,7 @@ public class EnsemblePage extends javax.swing.JFrame
       NameLabel = new javax.swing.JLabel();
       JLabel2 = new javax.swing.JLabel();
       DirectorLabel = new javax.swing.JLabel();
+      jButton1 = new javax.swing.JButton();
       jPanel3 = new javax.swing.JPanel();
       jLabel2 = new javax.swing.JLabel();
       jScrollPane1 = new javax.swing.JScrollPane();
@@ -106,6 +110,8 @@ public class EnsemblePage extends javax.swing.JFrame
       jLabel1.setText("jLabel1");
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+      setMinimumSize(new java.awt.Dimension(800, 600));
+      setPreferredSize(new java.awt.Dimension(800, 600));
 
       jPanel1.setBackground(new java.awt.Color(255, 204, 102));
 
@@ -120,24 +126,40 @@ public class EnsemblePage extends javax.swing.JFrame
       DirectorLabel.setFont(new java.awt.Font("Wide Latin", 0, 14)); // NOI18N
       DirectorLabel.setText("Directed By ");
 
+      jButton1.setBackground(new java.awt.Color(153, 153, 255));
+      jButton1.setText("Go Back");
+      jButton1.setToolTipText("");
+      jButton1.addActionListener(new java.awt.event.ActionListener()
+      {
+         public void actionPerformed(java.awt.event.ActionEvent evt)
+         {
+            jButton1ActionPerformed(evt);
+         }
+      });
+
       javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
       jPanel2.setLayout(jPanel2Layout);
       jPanel2Layout.setHorizontalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addComponent(NameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addGroup(jPanel2Layout.createSequentialGroup()
+                  .addComponent(NameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addComponent(jButton1))
+               .addGroup(jPanel2Layout.createSequentialGroup()
+                  .addContainerGap()
+                  .addComponent(JLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addComponent(DirectorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addContainerGap())
-         .addGroup(jPanel2Layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(JLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(DirectorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(0, 0, Short.MAX_VALUE))
       );
       jPanel2Layout.setVerticalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addComponent(NameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addComponent(NameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jButton1))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                .addComponent(JLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,7 +238,7 @@ public class EnsemblePage extends javax.swing.JFrame
       jPanel3Layout.setHorizontalGroup(
          jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-            .addContainerGap(25, Short.MAX_VALUE)
+            .addContainerGap(43, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addGroup(jPanel3Layout.createSequentialGroup()
                   .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,8 +365,12 @@ public class EnsemblePage extends javax.swing.JFrame
 
    private void PostButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_PostButtonActionPerformed
    {//GEN-HEADEREND:event_PostButtonActionPerformed
-      thisEnsemble.messages.add( MessageTextBox.getText() );
+      Date d = new Date();
+      String formatted = new SimpleDateFormat("MM-dd hh:mm a").format(d);
+      thisEnsemble.messages.add( "(" + formatted + ") " + network.getCurrentUser().getName()
+            + ": " + MessageTextBox.getText() );
       MessageJList.setListData( thisEnsemble.messages );
+      MessageTextBox.setText("");
    }//GEN-LAST:event_PostButtonActionPerformed
 
    private void AddEventButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_AddEventButtonActionPerformed
@@ -358,7 +384,7 @@ public class EnsemblePage extends javax.swing.JFrame
          StringTokenizer st = new StringTokenizer(date, "-");
          try
          {
-            int month = Integer.valueOf(st.nextToken());
+            int month = Integer.valueOf(st.nextToken()) - 1;
             int day = Integer.valueOf(st.nextToken());
             int year = Integer.valueOf(st.nextToken());
             int hour = Integer.valueOf(st.nextToken());
@@ -369,7 +395,7 @@ public class EnsemblePage extends javax.swing.JFrame
             UpcomingEventsJlist.setListData(thisEnsemble.getEvents());
             valid = true;
          }
-         catch( NoSuchElementException e )
+         catch( NoSuchElementException | NumberFormatException e )
          {
             valid = false;
          }
@@ -377,6 +403,11 @@ public class EnsemblePage extends javax.swing.JFrame
       if( valid == false )
          ErrorLabel.setText("Invalid Format!");
    }//GEN-LAST:event_AddEventButtonActionPerformed
+
+   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+   {//GEN-HEADEREND:event_jButton1ActionPerformed
+      dispose();
+   }//GEN-LAST:event_jButton1ActionPerformed
 
    
    private void DoubleClickEventJlistActionPerformed( MouseEvent evt)
@@ -451,6 +482,7 @@ public class EnsemblePage extends javax.swing.JFrame
    private javax.swing.JTextField TimeTextBox;
    private javax.swing.JList UpcomingEventsJlist;
    private javax.swing.JButton UploadorDownloadButton;
+   private javax.swing.JButton jButton1;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;
