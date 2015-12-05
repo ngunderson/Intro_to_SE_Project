@@ -1,7 +1,8 @@
 package HelperClasses;
 
-import java.util.Vector;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
 
 /**
  
@@ -37,7 +38,8 @@ public class Event
    
    public String getTime()
    {
-      return time.toString();
+      String formatted = new SimpleDateFormat("MM-dd-yyyy").format(time);
+      return formatted;
    }
    @Override
    public String toString()
