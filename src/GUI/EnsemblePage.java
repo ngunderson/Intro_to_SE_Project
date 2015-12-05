@@ -2,6 +2,9 @@ package GUI;
 import HelperClasses.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,6 +28,33 @@ public class EnsemblePage extends javax.swing.JFrame
       initComponents();
       thisEnsemble = e;
       network = _network;
+      NameLabel.setText(thisEnsemble.getName());
+      DirectorLabel.setText(thisEnsemble.getDirector().getName());
+      UpcomingEventsJlist.setListData(thisEnsemble.getEvents());
+      MessageJList.setListData(thisEnsemble.messages);
+      if ( network.getCurrentUser() instanceof Director )
+      {
+         AddEventButton.setVisible(true);
+         jLabel5.setVisible(true);
+         jLabel6.setVisible(true);
+         jLabel7.setVisible(true);
+         jLabel8.setVisible(true);
+         NameTextBox.setVisible(true);
+         LocationTextBox.setVisible(true);
+         TimeTextBox.setVisible(true);
+         
+      }
+      else
+      {
+         AddEventButton.setVisible(false);
+         jLabel5.setVisible(false);
+         jLabel6.setVisible(false);
+         jLabel7.setVisible(false);
+         jLabel8.setVisible(false);
+         NameTextBox.setVisible(false);
+         LocationTextBox.setVisible(false);
+         TimeTextBox.setVisible(false);     
+      }
       UpcomingEventsJlist.addMouseListener(new MouseAdapter() {
          public void mouseClicked( MouseEvent evt ){
             if( evt.getClickCount() == 2 ){
@@ -44,11 +74,12 @@ public class EnsemblePage extends javax.swing.JFrame
    private void initComponents()
    {
 
+      jLabel1 = new javax.swing.JLabel();
       jPanel1 = new javax.swing.JPanel();
       jPanel2 = new javax.swing.JPanel();
-      jLabel1 = new javax.swing.JLabel();
+      NameLabel = new javax.swing.JLabel();
+      JLabel2 = new javax.swing.JLabel();
       DirectorLabel = new javax.swing.JLabel();
-      AddStudentButton = new javax.swing.JButton();
       jPanel3 = new javax.swing.JPanel();
       jLabel2 = new javax.swing.JLabel();
       jScrollPane1 = new javax.swing.JScrollPane();
@@ -63,6 +94,16 @@ public class EnsemblePage extends javax.swing.JFrame
       MessageJList = new javax.swing.JList();
       MessageTextBox = new javax.swing.JTextField();
       PostButton = new javax.swing.JButton();
+      jLabel5 = new javax.swing.JLabel();
+      jLabel6 = new javax.swing.JLabel();
+      jLabel7 = new javax.swing.JLabel();
+      jLabel8 = new javax.swing.JLabel();
+      NameTextBox = new javax.swing.JTextField();
+      LocationTextBox = new javax.swing.JTextField();
+      TimeTextBox = new javax.swing.JTextField();
+      ErrorLabel = new javax.swing.JLabel();
+
+      jLabel1.setText("jLabel1");
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,36 +111,37 @@ public class EnsemblePage extends javax.swing.JFrame
 
       jPanel2.setBackground(new java.awt.Color(255, 204, 102));
 
-      jLabel1.setFont(new java.awt.Font("Wide Latin", 0, 30)); // NOI18N
-      jLabel1.setText("Name");
+      NameLabel.setFont(new java.awt.Font("Wide Latin", 0, 30)); // NOI18N
+      NameLabel.setText("Name");
+
+      JLabel2.setFont(new java.awt.Font("Wide Latin", 0, 14)); // NOI18N
+      JLabel2.setText("Directed By ");
 
       DirectorLabel.setFont(new java.awt.Font("Wide Latin", 0, 14)); // NOI18N
       DirectorLabel.setText("Directed By ");
-
-      AddStudentButton.setBackground(new java.awt.Color(153, 153, 255));
-      AddStudentButton.setText("Add Student");
 
       javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
       jPanel2.setLayout(jPanel2Layout);
       jPanel2Layout.setHorizontalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+            .addComponent(NameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
             .addContainerGap())
          .addGroup(jPanel2Layout.createSequentialGroup()
             .addContainerGap()
+            .addComponent(JLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(DirectorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(AddStudentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(0, 0, Short.MAX_VALUE))
       );
       jPanel2Layout.setVerticalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(NameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-               .addComponent(DirectorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-               .addComponent(AddStudentButton))
+               .addComponent(JLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(DirectorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addContainerGap())
       );
 
@@ -132,6 +174,13 @@ public class EnsemblePage extends javax.swing.JFrame
 
       AddEventButton.setBackground(new java.awt.Color(153, 153, 255));
       AddEventButton.setText("Add");
+      AddEventButton.addActionListener(new java.awt.event.ActionListener()
+      {
+         public void actionPerformed(java.awt.event.ActionEvent evt)
+         {
+            AddEventButtonActionPerformed(evt);
+         }
+      });
 
       jLabel4.setFont(new java.awt.Font("Wide Latin", 0, 12)); // NOI18N
       jLabel4.setText("Files");
@@ -154,17 +203,25 @@ public class EnsemblePage extends javax.swing.JFrame
          }
       });
 
+      jLabel5.setText("Location");
+
+      jLabel6.setText("Name");
+
+      jLabel7.setText("Time");
+
+      jLabel8.setText("Format - \"MM-dd-yyyy-hh-mm\"");
+
       javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
       jPanel3.setLayout(jPanel3Layout);
       jPanel3Layout.setHorizontalGroup(
          jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addContainerGap(25, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addGroup(jPanel3Layout.createSequentialGroup()
-                  .addGap(30, 30, 30)
-                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                     .addComponent(UploadorDownloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                     .addComponent(UploadorDownloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                      .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,15 +231,30 @@ public class EnsemblePage extends javax.swing.JFrame
                         .addComponent(PostButton)))
                   .addGap(18, 18, 18))
                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                  .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addGap(18, 18, 18)
                   .addComponent(jLabel2)
                   .addGap(72, 72, 72)))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-               .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-               .addComponent(jScrollPane2)
-               .addComponent(AddEventButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                     .addComponent(AddEventButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(NameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                           .addComponent(jLabel5)
+                           .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                           .addComponent(LocationTextBox)
+                           .addComponent(TimeTextBox)))
+                     .addComponent(jScrollPane2))
+                  .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+               .addComponent(ErrorLabel))
             .addContainerGap())
       );
       jPanel3Layout.setVerticalGroup(
@@ -194,22 +266,44 @@ public class EnsemblePage extends javax.swing.JFrame
                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addGroup(jPanel3Layout.createSequentialGroup()
-                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                     .addComponent(jScrollPane2))
+                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(UploadorDownloadButton))
+                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                           .addComponent(MessageTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                           .addComponent(PostButton))
+                        .addGap(9, 9, 9)
+                        .addComponent(jScrollPane3)))
+                  .addContainerGap())
+               .addGroup(jPanel3Layout.createSequentialGroup()
+                  .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                     .addComponent(UploadorDownloadButton)
-                     .addComponent(AddEventButton)))
-               .addGroup(jPanel3Layout.createSequentialGroup()
-                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                     .addComponent(MessageTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                     .addComponent(PostButton))
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                  .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(AddEventButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                           .addComponent(jLabel6)
+                           .addComponent(NameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                           .addComponent(jLabel5)
+                           .addComponent(LocationTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                           .addComponent(jLabel7)
+                           .addComponent(TimeTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addGap(0, 37, Short.MAX_VALUE))
+                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(153, 153, 153)
+                        .addComponent(ErrorLabel))))))
       );
 
       javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -252,6 +346,37 @@ public class EnsemblePage extends javax.swing.JFrame
       thisEnsemble.messages.add( MessageTextBox.getText() );
       MessageJList.setListData( thisEnsemble.messages );
    }//GEN-LAST:event_PostButtonActionPerformed
+
+   private void AddEventButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_AddEventButtonActionPerformed
+   {//GEN-HEADEREND:event_AddEventButtonActionPerformed
+      boolean valid = false;
+      String name = NameTextBox.getText();
+      String location = LocationTextBox.getText();
+      String date = TimeTextBox.getText();
+      if( !name.equals("") && !location.equals("") && !date.equals(""))
+      {  
+         StringTokenizer st = new StringTokenizer(date, "-");
+         try
+         {
+            int month = Integer.valueOf(st.nextToken());
+            int day = Integer.valueOf(st.nextToken());
+            int year = Integer.valueOf(st.nextToken());
+            int hour = Integer.valueOf(st.nextToken());
+            int minute = Integer.valueOf(st.nextToken());
+            Date d = new Date(year - 1900, month, day, hour, minute);
+            Event e = new Event( location, name, d );
+            thisEnsemble.addEvent(e);
+            UpcomingEventsJlist.setListData(thisEnsemble.getEvents());
+            valid = true;
+         }
+         catch( NoSuchElementException e )
+         {
+            valid = false;
+         }
+      }
+      if( valid == false )
+         ErrorLabel.setText("Invalid Format!");
+   }//GEN-LAST:event_AddEventButtonActionPerformed
 
    
    private void DoubleClickEventJlistActionPerformed( MouseEvent evt)
@@ -313,18 +438,27 @@ public class EnsemblePage extends javax.swing.JFrame
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JButton AddEventButton;
-   private javax.swing.JButton AddStudentButton;
    private javax.swing.JLabel DirectorLabel;
    private javax.swing.JList EnsemblesJlist;
+   private javax.swing.JLabel ErrorLabel;
+   private javax.swing.JLabel JLabel2;
+   private javax.swing.JTextField LocationTextBox;
    private javax.swing.JList MessageJList;
    private javax.swing.JTextField MessageTextBox;
+   private javax.swing.JLabel NameLabel;
+   private javax.swing.JTextField NameTextBox;
    private javax.swing.JButton PostButton;
+   private javax.swing.JTextField TimeTextBox;
    private javax.swing.JList UpcomingEventsJlist;
    private javax.swing.JButton UploadorDownloadButton;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;
    private javax.swing.JLabel jLabel4;
+   private javax.swing.JLabel jLabel5;
+   private javax.swing.JLabel jLabel6;
+   private javax.swing.JLabel jLabel7;
+   private javax.swing.JLabel jLabel8;
    private javax.swing.JPanel jPanel1;
    private javax.swing.JPanel jPanel2;
    private javax.swing.JPanel jPanel3;

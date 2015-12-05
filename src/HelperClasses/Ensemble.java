@@ -53,6 +53,16 @@ public class Ensemble
       return members.add(p);
    }
    
+   public boolean addEvent( Event e )
+   {
+      return events.add(e);
+   }
+   
+   public String getName()
+   {
+      return name;
+   }
+   
    @Override
    public String toString()
    {
