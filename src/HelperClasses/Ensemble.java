@@ -28,6 +28,11 @@ public class Ensemble
       return events.add(e);
    }
    
+   public Director getDirector()
+   {
+      return director;
+   }
+   
    public Vector<Event> getEvents()
    {
       return events;

@@ -62,9 +62,9 @@ public class MusicNetwork
       Date d6 = new Date( 116, 3, 24);
       Event e6 = new Event( "Stations", "Flutes featuring Triangle Ensemble", d6 );
       Vector<Event> eventList2 = new Vector<>();
-      eventList1.add(e4);
-      eventList1.add(e5);
-      eventList1.add(e6);
+      eventList2.add(e4);
+      eventList2.add(e5);
+      eventList2.add(e6);
       
       Ensemble en2 = new Ensemble( (Director) dir2, eventList2 , "Symphonic Wind Ensemble" );
       en2.addMember(stu3);
@@ -79,9 +79,9 @@ public class MusicNetwork
       Date d9 = new Date( 116, 3, 16);
       Event e9 = new Event( "Karmenn Library Third Floor", "Saints Come Marching In", d9 );
       Vector<Event> eventList3 = new Vector<>();
-      eventList1.add(e7);
-      eventList1.add(e8);
-      eventList1.add(e9);
+      eventList3.add(e7);
+      eventList3.add(e8);
+      eventList3.add(e9);
       
       Ensemble en3 = new Ensemble( (Director) dir3, eventList3 , "Symphony Band" );
       en3.addMember(stu5);
@@ -102,17 +102,31 @@ public class MusicNetwork
    
    public Vector<Ensemble> ensemblesFor( Person p )
    {  
-      Vector<Ensemble> temp = new Vector<>();
-      for( Ensemble e : ensembles )
+      if( p instanceof Student )
       {
-         if( e.contains(p) )
-            temp.add(e);
+         Vector<Ensemble> temp = new Vector<>();
+         for( Ensemble e : ensembles )
+         {
+            if( e.contains(p) )
+               temp.add(e);
+         }
+         return temp;
       }
-      return temp;
+      else
+      {  
+         Vector<Ensemble> temp = new Vector<>();
+         for( Ensemble e : ensembles )
+         {
+            if( e.getDirector().equals(p))
+               temp.add(e);
+         }
+         return temp;
+      }
    }
    
    public Vector<Event> eventsFor( Person p )
    {  
+
       Vector<Ensemble> tempEnsembles = ensemblesFor(p);
       Vector<Event> tempEvents = new Vector<>();
       Vector<Event> returnEvents = new Vector<>();
@@ -134,10 +148,10 @@ public class MusicNetwork
    public Person login( String username, String password )
    {  
       Person temp = null;
-      
+      Person newp = new Person( username, password );
       for( Person p : people )
       {
-         if( p.equals(p))
+         if( p.equals(newp))
          {
             temp = p;
             break;

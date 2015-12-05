@@ -186,18 +186,21 @@ public class WelcomePage extends javax.swing.JFrame
          {
             network.setCurrentUser(p);
             StudentPage page = new StudentPage(network);
+            page.pack();
             page.setVisible(true);
          }
          else if( p instanceof Director )
          {  
             network.setCurrentUser(p);
             DirectorPage page = new DirectorPage(network);
+            page.pack();
             page.setVisible(true);
          }
          else
          {
             network.setCurrentUser(p);
             AdminPage page = new AdminPage(network);
+            page.pack();
             page.setVisible(true);
          }
       }

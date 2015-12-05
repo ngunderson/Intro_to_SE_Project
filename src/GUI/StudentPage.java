@@ -70,6 +70,7 @@ public class StudentPage extends javax.swing.JFrame
       UpcomingEventsJlist = new javax.swing.JList();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+      setPreferredSize(new java.awt.Dimension(550, 432));
 
       jPanel1.setBackground(new java.awt.Color(255, 204, 102));
 
@@ -194,6 +195,7 @@ public class StudentPage extends javax.swing.JFrame
    {
       Ensemble e = (Ensemble)EnsembleJlist.getSelectedValue();
       EnsemblePage p = new EnsemblePage( e, network );
+      p.pack();
       p.setVisible(true);
    }
    

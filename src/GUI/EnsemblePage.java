@@ -258,6 +258,7 @@ public class EnsemblePage extends javax.swing.JFrame
    {
       Event e = (Event)UpcomingEventsJlist.getSelectedValue();
       EventPage p = new EventPage( e, network );
+      p.pack();
       p.setVisible(true);
    }
    

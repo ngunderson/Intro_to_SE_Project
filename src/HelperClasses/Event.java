@@ -44,7 +44,7 @@ public class Event
    @Override
    public String toString()
    {
-      return name + "Location: " + location;
+      return name + ", Location: " + location;
    }
    
    

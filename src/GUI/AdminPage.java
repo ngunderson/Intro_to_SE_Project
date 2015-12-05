@@ -22,10 +22,10 @@ public class AdminPage extends javax.swing.JFrame
    public AdminPage( MusicNetwork _network )
    {
       initComponents();
+      network = _network;
       currentUser = (Administrator) network.getCurrentUser();
       jLabel1.setText( currentUser.getName() );
       PersonJlist.setListData(network.getPeople());
-      network = _network;
    }
 
    /**
@@ -52,8 +52,10 @@ public class AdminPage extends javax.swing.JFrame
       jLabel3 = new javax.swing.JLabel();
       jLabel4 = new javax.swing.JLabel();
       jButton1 = new javax.swing.JButton();
+      ErrorLabel = new javax.swing.JLabel();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+      setPreferredSize(new java.awt.Dimension(500, 391));
 
       jPanel1.setBackground(new java.awt.Color(255, 204, 102));
 
@@ -67,7 +69,7 @@ public class AdminPage extends javax.swing.JFrame
       jPanel2Layout.setHorizontalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
             .addContainerGap())
       );
       jPanel2Layout.setVerticalGroup(
@@ -112,31 +114,33 @@ public class AdminPage extends javax.swing.JFrame
       jPanel3Layout.setHorizontalGroup(
          jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel3Layout.createSequentialGroup()
-            .addGap(30, 30, 30)
+            .addContainerGap()
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addGroup(jPanel3Layout.createSequentialGroup()
-                  .addComponent(btnRemovePerson, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addGap(0, 0, Short.MAX_VALUE))
+                  .addGap(0, 0, Short.MAX_VALUE)
+                  .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                .addGroup(jPanel3Layout.createSequentialGroup()
-                  .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                  .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                   .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                           .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                           .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                           .addComponent(AccountTypeComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                           .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING)
-                           .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)))
-                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                  .addContainerGap())))
+                     .addComponent(AccountTypeComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                     .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING)
+                     .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))))
+            .addContainerGap())
          .addGroup(jPanel3Layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jLabel2)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addGroup(jPanel3Layout.createSequentialGroup()
+                  .addGap(30, 30, 30)
+                  .addComponent(btnRemovePerson, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addGap(18, 18, 18)
+                  .addComponent(ErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+               .addGroup(jPanel3Layout.createSequentialGroup()
+                  .addContainerGap()
+                  .addComponent(jLabel2)))
             .addGap(0, 0, Short.MAX_VALUE))
       );
       jPanel3Layout.setVerticalGroup(
@@ -160,7 +164,9 @@ public class AdminPage extends javax.swing.JFrame
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                   .addComponent(jButton1)))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(btnRemovePerson)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+               .addComponent(btnRemovePerson)
+               .addComponent(ErrorLabel))
             .addContainerGap(28, Short.MAX_VALUE))
       );
 
@@ -171,7 +177,7 @@ public class AdminPage extends javax.swing.JFrame
          .addGroup(jPanel1Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+               .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
       );
@@ -211,9 +217,15 @@ public class AdminPage extends javax.swing.JFrame
    private void btnRemovePersonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRemovePersonActionPerformed
    {//GEN-HEADEREND:event_btnRemovePersonActionPerformed
       Person p = (Person) PersonJlist.getSelectedValue();
-      currentUser.removePerson( p, network );
-      PersonJlist.setListData(network.getPeople());
-
+      if( p.equals(currentUser))
+         ErrorLabel.setText("You can't delete yourself!");
+      else
+      {
+         ErrorLabel.setText("");
+         currentUser.removePerson( p, network );
+         PersonJlist.setListData(network.getPeople());
+      }  
+      
    }//GEN-LAST:event_btnRemovePersonActionPerformed
 
    /**
@@ -267,6 +279,7 @@ public class AdminPage extends javax.swing.JFrame
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JComboBox AccountTypeComboBox;
+   private javax.swing.JLabel ErrorLabel;
    private javax.swing.JList PersonJlist;
    private javax.swing.JButton btnRemovePerson;
    private javax.swing.JButton jButton1;

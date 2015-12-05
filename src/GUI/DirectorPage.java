@@ -217,6 +217,7 @@ public class DirectorPage extends javax.swing.JFrame
    {
       Ensemble e = (Ensemble)EnsemblesJlist.getSelectedValue();
       EnsemblePage p = new EnsemblePage( e, network );
+      p.pack();
       p.setVisible(true);
    }
    
