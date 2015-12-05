@@ -43,6 +43,7 @@ public class DirectorPage extends javax.swing.JFrame
       jLabel1.setText( currentUser.getName() );
       EnsemblesJlist.setListData( currentUser.viewEnsembles(network) );
       UpcomingEventsJlist.setListData( currentUser.viewEvents(network) );
+      setLocationRelativeTo(null);
    }
 
    /**
@@ -57,6 +58,7 @@ public class DirectorPage extends javax.swing.JFrame
 
       jPanel1 = new javax.swing.JPanel();
       jPanel2 = new javax.swing.JPanel();
+      jButton1 = new javax.swing.JButton();
       jLabel1 = new javax.swing.JLabel();
       jPanel3 = new javax.swing.JPanel();
       jLabel2 = new javax.swing.JLabel();
@@ -75,6 +77,17 @@ public class DirectorPage extends javax.swing.JFrame
 
       jPanel2.setBackground(new java.awt.Color(255, 204, 102));
 
+      jButton1.setBackground(new java.awt.Color(153, 153, 255));
+      jButton1.setText("Log Out");
+      jButton1.setToolTipText("");
+      jButton1.addActionListener(new java.awt.event.ActionListener()
+      {
+         public void actionPerformed(java.awt.event.ActionEvent evt)
+         {
+            jButton1ActionPerformed(evt);
+         }
+      });
+
       jLabel1.setFont(new java.awt.Font("Wide Latin", 0, 30)); // NOI18N
       jLabel1.setText("Name");
 
@@ -84,11 +97,16 @@ public class DirectorPage extends javax.swing.JFrame
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton1)
             .addContainerGap())
       );
       jPanel2Layout.setVerticalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+         .addGroup(jPanel2Layout.createSequentialGroup()
+            .addComponent(jButton1)
+            .addGap(0, 0, Short.MAX_VALUE))
       );
 
       jPanel3.setBackground(new java.awt.Color(255, 153, 0));
@@ -228,6 +246,12 @@ public class DirectorPage extends javax.swing.JFrame
       
    }//GEN-LAST:event_CreateEnsembleButtonActionPerformed
 
+   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+   {//GEN-HEADEREND:event_jButton1ActionPerformed
+      dispose();
+      network.setCurrentUser(null);
+   }//GEN-LAST:event_jButton1ActionPerformed
+
    /**
     @param args the command line arguments
     */
@@ -281,6 +305,7 @@ public class DirectorPage extends javax.swing.JFrame
    private javax.swing.JButton CreateEnsembleButton;
    private javax.swing.JList EnsemblesJlist;
    private javax.swing.JList UpcomingEventsJlist;
+   private javax.swing.JButton jButton1;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;

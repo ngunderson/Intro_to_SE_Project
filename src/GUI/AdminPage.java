@@ -26,6 +26,7 @@ public class AdminPage extends javax.swing.JFrame
       currentUser = (Administrator) network.getCurrentUser();
       jLabel1.setText( currentUser.getName() );
       PersonJlist.setListData(network.getPeople());
+      setLocationRelativeTo(null);
    }
 
    /**
@@ -41,6 +42,7 @@ public class AdminPage extends javax.swing.JFrame
       jPanel1 = new javax.swing.JPanel();
       jPanel2 = new javax.swing.JPanel();
       jLabel1 = new javax.swing.JLabel();
+      jButton2 = new javax.swing.JButton();
       jPanel3 = new javax.swing.JPanel();
       jScrollPane1 = new javax.swing.JScrollPane();
       PersonJlist = new javax.swing.JList();
@@ -64,17 +66,33 @@ public class AdminPage extends javax.swing.JFrame
       jLabel1.setFont(new java.awt.Font("Wide Latin", 0, 30)); // NOI18N
       jLabel1.setText("Name");
 
+      jButton2.setBackground(new java.awt.Color(153, 153, 255));
+      jButton2.setText("Log Out");
+      jButton2.setToolTipText("");
+      jButton2.addActionListener(new java.awt.event.ActionListener()
+      {
+         public void actionPerformed(java.awt.event.ActionEvent evt)
+         {
+            jButton2ActionPerformed(evt);
+         }
+      });
+
       javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
       jPanel2.setLayout(jPanel2Layout);
       jPanel2Layout.setHorizontalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton2)
             .addContainerGap())
       );
       jPanel2Layout.setVerticalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+         .addGroup(jPanel2Layout.createSequentialGroup()
+            .addComponent(jButton2)
+            .addGap(0, 0, Short.MAX_VALUE))
       );
 
       jPanel3.setBackground(new java.awt.Color(255, 153, 0));
@@ -118,9 +136,7 @@ public class AdminPage extends javax.swing.JFrame
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addGroup(jPanel3Layout.createSequentialGroup()
-                  .addGap(0, 0, Short.MAX_VALUE)
-                  .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+               .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                .addGroup(jPanel3Layout.createSequentialGroup()
                   .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                      .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -228,6 +244,12 @@ public class AdminPage extends javax.swing.JFrame
       
    }//GEN-LAST:event_btnRemovePersonActionPerformed
 
+   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton2ActionPerformed
+   {//GEN-HEADEREND:event_jButton2ActionPerformed
+      dispose();
+      network.setCurrentUser(null);
+   }//GEN-LAST:event_jButton2ActionPerformed
+
    /**
     @param args the command line arguments
     */
@@ -283,6 +305,7 @@ public class AdminPage extends javax.swing.JFrame
    private javax.swing.JList PersonJlist;
    private javax.swing.JButton btnRemovePerson;
    private javax.swing.JButton jButton1;
+   private javax.swing.JButton jButton2;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;

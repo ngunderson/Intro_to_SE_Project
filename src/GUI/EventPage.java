@@ -1,5 +1,7 @@
 package GUI;
 import HelperClasses.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,10 +26,12 @@ public class EventPage extends javax.swing.JFrame
       network = _network;
       initComponents();
       NameLabel.setText( thisEvent.getName() );
-      DateLabel.setText( thisEvent.getTime() );
-      //THE PEOPLE
+      DateLabel.setText( "DATE: " + thisEvent.getDate() );
       MessagesJlist.setListData( thisEvent.messages );
-      LocationLabel.setText(e.getLocation());
+      LocationLabel.setText( "LOCATION: " + e.getLocation());
+      TimeLabel.setText( "TIME: " + thisEvent.getTime() );
+      getRootPane().setDefaultButton(PostButton);
+      setLocationRelativeTo(null);
    }
 
    /**
@@ -46,10 +50,10 @@ public class EventPage extends javax.swing.JFrame
       jPanel1 = new javax.swing.JPanel();
       jPanel2 = new javax.swing.JPanel();
       NameLabel = new javax.swing.JLabel();
-      jLabel4 = new javax.swing.JLabel();
       DateLabel = new javax.swing.JLabel();
-      jLabel5 = new javax.swing.JLabel();
       LocationLabel = new javax.swing.JLabel();
+      jButton1 = new javax.swing.JButton();
+      TimeLabel = new javax.swing.JLabel();
       jPanel3 = new javax.swing.JPanel();
       jLabel3 = new javax.swing.JLabel();
       jScrollPane2 = new javax.swing.JScrollPane();
@@ -81,52 +85,61 @@ public class EventPage extends javax.swing.JFrame
       NameLabel.setFont(new java.awt.Font("Wide Latin", 0, 30)); // NOI18N
       NameLabel.setText("Name");
 
-      jLabel4.setFont(new java.awt.Font("Wide Latin", 0, 14)); // NOI18N
-      jLabel4.setText("Date: ");
+      DateLabel.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+      DateLabel.setText("DATE:");
 
-      DateLabel.setFont(new java.awt.Font("Wide Latin", 0, 14)); // NOI18N
-      DateLabel.setText("TBD");
+      LocationLabel.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+      LocationLabel.setText("LOCATION:");
 
-      jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-      jLabel5.setText("Location:");
+      jButton1.setBackground(new java.awt.Color(153, 153, 255));
+      jButton1.setText("Go Back");
+      jButton1.setToolTipText("");
+      jButton1.addActionListener(new java.awt.event.ActionListener()
+      {
+         public void actionPerformed(java.awt.event.ActionEvent evt)
+         {
+            jButton1ActionPerformed(evt);
+         }
+      });
 
-      LocationLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+      TimeLabel.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+      TimeLabel.setText("TIME:");
 
       javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
       jPanel2.setLayout(jPanel2Layout);
       jPanel2Layout.setHorizontalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jLabel5)
-            .addGap(18, 18, 18)
-            .addComponent(LocationLabel)
-            .addGap(240, 240, 240)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-               .addComponent(DateLabel)
-               .addComponent(jLabel4))
-            .addContainerGap(39, Short.MAX_VALUE))
-         .addGroup(jPanel2Layout.createSequentialGroup()
-            .addComponent(NameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGap(103, 103, 103))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addGroup(jPanel2Layout.createSequentialGroup()
+                  .addComponent(NameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                  .addGap(87, 87, 87)
+                  .addComponent(jButton1))
+               .addGroup(jPanel2Layout.createSequentialGroup()
+                  .addContainerGap()
+                  .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                     .addComponent(LocationLabel)
+                     .addComponent(DateLabel)
+                     .addComponent(TimeLabel))
+                  .addGap(0, 0, Short.MAX_VALUE)))
+            .addContainerGap())
       );
       jPanel2Layout.setVerticalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addGroup(jPanel2Layout.createSequentialGroup()
+                  .addContainerGap()
+                  .addComponent(jButton1))
+               .addGroup(jPanel2Layout.createSequentialGroup()
                   .addComponent(NameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                  .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                     .addComponent(jLabel5)
-                     .addComponent(LocationLabel))
-                  .addGap(0, 11, Short.MAX_VALUE))
-               .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                  .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(jLabel4)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                  .addComponent(DateLabel)))
-            .addContainerGap())
+                  .addGap(1, 1, 1)
+                  .addComponent(DateLabel)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addComponent(TimeLabel)))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(LocationLabel)
+            .addContainerGap(18, Short.MAX_VALUE))
       );
 
       jPanel3.setBackground(new java.awt.Color(255, 153, 0));
@@ -223,9 +236,18 @@ public class EventPage extends javax.swing.JFrame
 
    private void PostButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_PostButtonActionPerformed
    {//GEN-HEADEREND:event_PostButtonActionPerformed
-      thisEvent.messages.add( MessageTextBox.getText() );
+      Date d = new Date();
+      String formatted = new SimpleDateFormat("MM-dd hh:mm a").format(d);
+      thisEvent.messages.add( "(" + formatted + ") " + network.getCurrentUser().getName()
+            + ": " + MessageTextBox.getText() );
       MessagesJlist.setListData( thisEvent.messages );
+      MessageTextBox.setText("");
    }//GEN-LAST:event_PostButtonActionPerformed
+
+   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+   {//GEN-HEADEREND:event_jButton1ActionPerformed
+      dispose();
+   }//GEN-LAST:event_jButton1ActionPerformed
 
    /**
     @param args the command line arguments
@@ -283,11 +305,11 @@ public class EventPage extends javax.swing.JFrame
    private javax.swing.JList MessagesJlist;
    private javax.swing.JLabel NameLabel;
    private javax.swing.JButton PostButton;
+   private javax.swing.JLabel TimeLabel;
+   private javax.swing.JButton jButton1;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;
-   private javax.swing.JLabel jLabel4;
-   private javax.swing.JLabel jLabel5;
    private javax.swing.JPanel jPanel1;
    private javax.swing.JPanel jPanel2;
    private javax.swing.JPanel jPanel3;

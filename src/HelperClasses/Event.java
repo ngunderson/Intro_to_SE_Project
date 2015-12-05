@@ -36,11 +36,18 @@ public class Event
       return name;
    }
    
-   public String getTime()
+   public String getDate()
    {
       String formatted = new SimpleDateFormat("MM-dd-yyyy").format(time);
       return formatted;
    }
+   
+   public String getTime()
+   {
+      String formatted = new SimpleDateFormat("hh:mm a").format(time);
+      return formatted;
+   }
+   
    @Override
    public String toString()
    {

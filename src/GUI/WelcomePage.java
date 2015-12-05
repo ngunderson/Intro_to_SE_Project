@@ -20,7 +20,8 @@ public class WelcomePage extends javax.swing.JFrame
    {
       network = new MusicNetwork();
       initComponents();
-      
+      getRootPane().setDefaultButton(LoginButton);
+      setLocationRelativeTo(null);
    }
 
    /**
@@ -40,10 +41,10 @@ public class WelcomePage extends javax.swing.JFrame
       jLabel2 = new javax.swing.JLabel();
       UsernameTextBox = new javax.swing.JTextField();
       jLabel3 = new javax.swing.JLabel();
-      PasswordTextBox = new javax.swing.JTextField();
       LoginButton = new javax.swing.JButton();
       ErrorMessageLabel = new javax.swing.JLabel();
       LoginErrorLabel = new javax.swing.JLabel();
+      PasswordTextBox = new javax.swing.JPasswordField();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setBackground(new java.awt.Color(255, 153, 51));
@@ -90,11 +91,11 @@ public class WelcomePage extends javax.swing.JFrame
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addGroup(jPanel1Layout.createSequentialGroup()
                   .addGap(46, 46, 46)
-                  .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                     .addComponent(PasswordTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                      .addComponent(jLabel3)
-                     .addComponent(UsernameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                     .addComponent(jLabel2)))
+                     .addComponent(UsernameTextBox, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+                     .addComponent(jLabel2)
+                     .addComponent(PasswordTextBox)))
                .addGroup(jPanel1Layout.createSequentialGroup()
                   .addGap(110, 110, 110)
                   .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -181,6 +182,8 @@ public class WelcomePage extends javax.swing.JFrame
       Person p = network.login(name, password);
       if( p != null && !name.equals("") && !password.equals(""))
       {
+         UsernameTextBox.setText("");
+         PasswordTextBox.setText("");
          LoginErrorLabel.setText("");
          if( p instanceof Student )
          {
@@ -262,7 +265,7 @@ public class WelcomePage extends javax.swing.JFrame
    private javax.swing.JLabel ErrorMessageLabel;
    private javax.swing.JButton LoginButton;
    private javax.swing.JLabel LoginErrorLabel;
-   private javax.swing.JTextField PasswordTextBox;
+   private javax.swing.JPasswordField PasswordTextBox;
    private javax.swing.JTextField UsernameTextBox;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
