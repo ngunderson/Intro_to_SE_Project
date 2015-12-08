@@ -32,7 +32,7 @@ public class MusicNetwork
       people.add(stu6);
       Person admin = new Administrator( "Omar Meqdadi", "Meqdadi" );
       people.add(admin);
-      Person dir1 = new Director( "Keith Leinart", "Leinart" );
+      Person dir1 = new Director( "Keith Leinert", "Leinert" );
       people.add(dir1);
       Person dir2 = new Director( "Barry Ellis", "Ellis" );
       people.add(dir2);
